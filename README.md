@@ -1,71 +1,33 @@
-# predicte-commit README
+# Predicte Commit
 
-This is the README for your extension "predicte-commit". After writing up a brief description, we recommend including the following sections.
+> This extension is for user who doesn't need AI chat app but still want the magic of AI autocomplete.
+
+**Predicte Commit** analyzes your staged changes and generates concise, descriptive commit messages using AI (Mistral or local LLMs).
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Zero-Friction**: One click or command to fill your commit message box.
+- **Privacy-Aware**: Content filtering and explicit file ignores.
+- **Flexible Providers**: Use **Mistral AI** (cloud) or your own **Local Ollama** instance.
+- **Smart Truncation**: Automatically handles large diffs to stay within context windows.
 
-For example if there is an image subfolder under your extension project workspace:
+## How it works
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+1. Stage your changes in VS Code's Source Control view.
+2. Click the **Sparkle Icon** $(sparkle) in the Source Control title bar (or run "Generate Message").
+3. Review the generated commit message in the input box.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+- `predicteCommit.provider`: Select AI provider (`mistral` or `local`).
+- `predicteCommit.ignoredFiles`: Glob patterns to exclude from analysis (e.g. `*-lock.json`, `dist/**`).
+- `predicteCommit.modelPriority`: List of Mistral models to try in order (e.g. `codestral-latest`).
+- `predicteCommit.localBaseUrl`: URL for local provider (default `http://localhost:11434/v1`).
+- `predicteCommit.localModel`: Model name for local provider.
 
-## Known Issues
+## Requirements
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+- **Mistral Provider**: Requires a valid API Key. You will be prompted to enter it on first use.
+- **Local Provider**: Requires an OpenAI-compatible endpoint (like Ollama) running locally.
