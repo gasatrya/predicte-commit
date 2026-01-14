@@ -20,6 +20,14 @@ export function capDiffsByFileAndTotal(diffs: Array<{ header: string; diff: stri
       break;
     }
 
+    // Account for the newline separator if this isn't the first file
+    if (parts.length > 0) {
+      remaining -= 2; // '\n\n'.length
+      if (remaining <= 0) {
+        break;
+      }
+    }
+
     const fileSection = `${header}\n${truncateWithMarker(diff, DIFF_CAPS.maxCharsPerFile)}`;
     if (fileSection.length <= remaining) {
       parts.push(fileSection);
