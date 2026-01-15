@@ -36,25 +36,27 @@ _This extension is for developers who want to automate the tedious task of writi
 
 ## 🚀 Getting Started
 
-1.  **Stage Changes**: Stage your files in the Source Control view as usual.
-2.  **Generate Message**:
-    *   Click the **Sparkle Icon** $(sparkle) in the Source Control title bar.
-    *   *Or* open the Command Palette (`Ctrl+Shift+P`) and run **Predicte Commit: Generate Message**.
-3.  **Review**: The generated message will appear in your commit input box. Edit if needed, then commit!
+1.  **Get an API Key**: Sign up at [Mistral AI](https://console.mistral.ai/) and get your API key.
+2.  **Set Key**: Open Command Palette (`Ctrl+Shift+P`) and run **Predicte Commit: Set API Key**.
+3.  **Stage Changes**: Stage your files in the Source Control view as usual.
+4.  **Generate Message**:
+    - Click the **Sparkle Icon** $(sparkle) in the Source Control title bar.
+    - _Or_ open the Command Palette (`Ctrl+Shift+P`) and run **Predicte Commit: Generate Message**.
+5.  **Review**: The generated message will appear in your commit input box. Edit if needed, then commit!
 
 > **Note**: If using the Mistral provider (default), you will be prompted to enter your API key on the first run.
 
 ## ⚙️ Configuration
 
-| Setting | Default | Description |
-| :--- | :--- | :--- |
-| `predicteCommit.provider` | `mistral` | AI provider to use (`mistral` or `local`). |
-| `predicteCommit.models` | `[]` | List of models to use. If empty, uses provider defaults. |
-| `predicteCommit.ignoredFiles` | `["*-lock.json", "*.svg", "dist/**"]` | Glob patterns to exclude from analysis. |
-| `predicteCommit.useLocal` | `false` | Enable to use a local provider instead of Mistral. |
-| `predicteCommit.localBaseUrl` | *(empty)* | Base URL for local provider (e.g., `http://localhost:11434/v1`). |
-| `predicteCommit.localModel` | *(empty)* | Model name for local provider. |
-| `predicteCommit.debugLogging` | `false` | Log prompt payload and diagnostics to the output channel. |
+| Setting                       | Default                               | Description                                                      |
+| :---------------------------- | :------------------------------------ | :--------------------------------------------------------------- |
+| `predicteCommit.provider`     | `mistral`                             | AI provider to use (`mistral` or `local`).                       |
+| `predicteCommit.models`       | `[]`                                  | List of models to use. If empty, uses provider defaults.         |
+| `predicteCommit.ignoredFiles` | `["*-lock.json", "*.svg", "dist/**"]` | Glob patterns to exclude from analysis.                          |
+| `predicteCommit.useLocal`     | `false`                               | Enable to use a local provider instead of Mistral.               |
+| `predicteCommit.localBaseUrl` | _(empty)_                             | Base URL for local provider (e.g., `http://localhost:11434/v1`). |
+| `predicteCommit.localModel`   | _(empty)_                             | Model name for local provider.                                   |
+| `predicteCommit.debugLogging` | `false`                               | Log prompt payload and diagnostics to the output channel.        |
 
 ## 🤝 Contributing
 
