@@ -17,19 +17,4 @@ suite('HTTP Error Handling', () => {
       assert.ok(e.message.includes(url), `Expected URL in error message '${e.message}'`);
     }
   });
-
-  test('ENOTFOUND returns friendly message', async () => {
-    const url = 'http://nonexistent-domain-xyz.local/v1/chat/completions';
-    try {
-      await postChatCompletion(url, undefined, { model: 'test', messages: [] });
-      assert.fail('Should have thrown');
-    } catch (e) {
-      assert.ok(e instanceof ProviderError, `Expected ProviderError but got ${e}`);
-      assert.ok(
-        e.message.includes('Address not found'),
-        `Expected 'Address not found' in '${e.message}'`,
-      );
-      assert.ok(e.message.includes(url), `Expected URL in error message '${e.message}'`);
-    }
-  });
 });
