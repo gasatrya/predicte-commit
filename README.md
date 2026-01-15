@@ -22,6 +22,7 @@ _This extension is for developers who want to automate the tedious task of writi
 
 ## ✨ Features
 
+- **💸 100% Free**: Use Mistral's latest coding models (Devstral 2).
 - **🚀 Zero-Friction**: Generate messages with a single click or command.
 - **🔒 Privacy-Aware**: Built-in content filtering and explicit file ignores to keep secrets safe.
 - **🤖 Flexible Providers**: Use **Mistral AI** (cloud) or your own **Local** instance (Ollama, vLLM, LM Studio).
@@ -48,16 +49,16 @@ _This extension is for developers who want to automate the tedious task of writi
 
 ## ⚙️ Configuration
 
-| Setting                       | Default                               | Description                                                      |
-| :---------------------------- | :------------------------------------ | :--------------------------------------------------------------- |
-| `predicteCommit.provider`     | `mistral`                             | Choose provider (default: mistral).                              |
-| `predicteCommit.models`       | `[]`                                  | List of models to use. If empty, uses provider defaults.         |
-| `predicteCommit.ignoredFiles` | `["*-lock.json", "*.svg", "dist/**"]` | Glob patterns to exclude from analysis.                          |
-| `predicteCommit.useLocal`     | `false`                               | Enable to use a local provider instead of Mistral.               |
-| `predicteCommit.localProvider`| `ollama`                              | Local provider to use when Use Local is enabled.                 |
-| `predicteCommit.localBaseUrl` | _(empty)_                             | Base URL for local provider (e.g., `http://localhost:11434/v1`). |
-| `predicteCommit.localModel`   | _(empty)_                             | Model name for local provider.                                   |
-| `predicteCommit.debugLogging` | `false`                               | Log prompt payload and diagnostics to the output channel.        |
+| Setting                        | Default                               | Description                                                      |
+| :----------------------------- | :------------------------------------ | :--------------------------------------------------------------- |
+| `predicteCommit.provider`      | `mistral`                             | Choose provider (default: mistral).                              |
+| `predicteCommit.models`        | `[]`                                  | List of models to use. If empty, uses provider defaults.         |
+| `predicteCommit.ignoredFiles`  | `["*-lock.json", "*.svg", "dist/**"]` | Glob patterns to exclude from analysis.                          |
+| `predicteCommit.useLocal`      | `false`                               | Enable to use a local provider instead of Mistral.               |
+| `predicteCommit.localProvider` | `ollama`                              | Local provider to use when Use Local is enabled.                 |
+| `predicteCommit.localBaseUrl`  | _(empty)_                             | Base URL for local provider (e.g., `http://localhost:11434/v1`). |
+| `predicteCommit.localModel`    | _(empty)_                             | Model name for local provider.                                   |
+| `predicteCommit.debugLogging`  | `false`                               | Log prompt payload and diagnostics to the output channel.        |
 
 ## 🤝 Contributing
 
