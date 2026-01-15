@@ -15,33 +15,37 @@ A privacy-focused, "Anti-Copilot" extension that generates git commit messages f
 **Stage Changes:** User adds files to the "Staged Changes" list in VS Code.
 
 **Trigger:**
+
 - **Primary:** Click the "Sparkle" icon in the Source Control Management (SCM) title bar.
 - **Secondary:** Command Palette > Mistral Commit: Generate Message.
 
 **Repo Selection (Multi-Root Support):**
+
 - If triggered via SCM button: Automatically targets that specific repo.
 - If triggered via Command Palette:
   - Defaults to the repo containing the currently active file.
   - If ambiguous (no file open, multiple repos), prompts user to select a repo via Quick Pick.
 
 **Processing:**
+
 1. Extension shows "Generating..." status.
 2. Extension filters out ignored files (e.g., package-lock.json) to prevent token bloat.
 3. Extension builds a bounded diff payload (caps + truncation markers).
 4. Extension calls the configured AI provider (cloud or local), attempting models in priority order as needed.
 
 **Output:**
+
 - The generated message is typed directly into the SCM Input Box for the correct repo.
 - User reviews and commits.
 
 ### Edge Cases (The "Unhappy Path")
 
-| Case | Behavior |
-|------|----------|
-| No API Key / Invalid Key | Notification with actions: "Set Mistral Key" and "Open Settings" |
-| Nothing Staged | Info notification: "No staged changes found in [Repo Name]." |
-| Monster Diff | If the filtered diff is still too large, apply truncation policy (per-file + total caps) and include truncation markers |
-| API Failure | If all models in the chain fail due to transient/unreachable errors, show error: "Mistral API unreachable." |
+| Case                     | Behavior                                                                                                                |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| No API Key / Invalid Key | Notification with actions: "Set Mistral Key" and "Open Settings"                                                        |
+| Nothing Staged           | Info notification: "No staged changes found in [Repo Name]."                                                            |
+| Monster Diff             | If the filtered diff is still too large, apply truncation policy (per-file + total caps) and include truncation markers |
+| API Failure              | If all models in the chain fail due to transient/unreachable errors, show error: "Mistral API unreachable."             |
 
 ---
 
@@ -69,23 +73,25 @@ import { minimatch } from 'minimatch';
 import * as path from 'path';
 
 const ignorePatterns = vscode.workspace
-    .getConfiguration('predicteCommit')
-    .get<string[]>('ignoredFiles', []);
+  .getConfiguration('predicteCommit')
+  .get<string[]>('ignoredFiles', []);
 
 function toRepoRelativePosixPath(repoRootFsPath: string, fileFsPath: string): string {
-    const rel = path.relative(repoRootFsPath, fileFsPath);
-    return rel.split(path.sep).join('/');
+  const rel = path.relative(repoRootFsPath, fileFsPath);
+  return rel.split(path.sep).join('/');
 }
 
-const validResources = stagedResources.filter(resource => {
-    const filePathRel = toRepoRelativePosixPath(repository.rootUri.fsPath, resource.uri.fsPath);
-    return !ignorePatterns.some(pattern => minimatch(filePathRel, pattern, { matchBase: true }));
+const validResources = stagedResources.filter((resource) => {
+  const filePathRel = toRepoRelativePosixPath(repository.rootUri.fsPath, resource.uri.fsPath);
+  return !ignorePatterns.some((pattern) => minimatch(filePathRel, pattern, { matchBase: true }));
 });
 
 // 3. Get diffs ONLY for valid files
-const diffs = await Promise.all(validResources.map(async resource => {
+const diffs = await Promise.all(
+  validResources.map(async (resource) => {
     return await getStagedDiff(repository, resource.uri);
-}));
+  }),
+);
 
 const fullDiff = diffs.join('\n');
 
@@ -108,10 +114,12 @@ The client iterates through a priority list to handle rate limits or free-tier u
 **Endpoint:** `https://api.mistral.ai/v1/chat/completions`
 
 **Priority Chain (Default):**
+
 1. `devstral-latest` (Primary: Newest free research model)
 2. `devstral-small-latest` (Fallback 1: Faster, lighter)
 
 **Retry Logic:**
+
 1. Try each model in order.
 2. If transient failure (HTTP `429, 502, 503, 504` or network/timeout) -> Log warning, try next model.
 3. If auth/config failure (HTTP `401/403` invalid/missing key, or HTTP `400` bad request) -> Surface actionable error (do not continue model chain).
@@ -122,44 +130,44 @@ The client iterates through a priority list to handle rate limits or free-tier u
 const MODEL_PRIORITY = predicteCommit.modelPriority;
 
 async function generateCommitMessageWithFallback(diff: string, apiKey: string) {
-    let lastError = null;
+  let lastError = null;
 
-    for (const modelId of MODEL_PRIORITY) {
-        try {
-            console.log(`Trying model: ${modelId}...`);
-            const message = await callMistralApi(modelId, diff, apiKey);
-            return message;
-        } catch (error) {
-            console.warn(`Model ${modelId} failed:`, error);
-            lastError = error;
-        }
+  for (const modelId of MODEL_PRIORITY) {
+    try {
+      console.log(`Trying model: ${modelId}...`);
+      const message = await callMistralApi(modelId, diff, apiKey);
+      return message;
+    } catch (error) {
+      console.warn(`Model ${modelId} failed:`, error);
+      lastError = error;
     }
+  }
 
-    throw new Error(`All AI models failed. Last error: ${lastError.message}`);
+  throw new Error(`All AI models failed. Last error: ${lastError.message}`);
 }
 
 async function callMistralApi(model: string, diff: string, apiKey: string) {
-    const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-            model: model,
-            messages: [
-                { role: "system", content: "You are a git commit message generator..." },
-                { role: "user", content: `Diff:\n${diff}` }
-            ]
-        })
-    });
+  const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: model,
+      messages: [
+        { role: 'system', content: 'You are a git commit message generator...' },
+        { role: 'user', content: `Diff:\n${diff}` },
+      ],
+    }),
+  });
 
-    if (!response.ok) {
-        throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    }
+  if (!response.ok) {
+    throw new Error(`API Error: ${response.status} ${response.statusText}`);
+  }
 
-    const data = await response.json();
-    return data.choices[0].message.content;
+  const data = await response.json();
+  return data.choices[0].message.content;
 }
 ```
 
@@ -176,22 +184,22 @@ async function callMistralApi(model: string, diff: string, apiKey: string) {
 
 Add these to package.json:
 
-| Setting ID | Type | Default | Description |
-|------------|------|---------|-------------|
-| `predicteCommit.modelPriority` | `string[]` | `["devstral-latest", "devstral-small-latest"]` | Order of models to attempt |
-| `predicteCommit.ignoredFiles` | `string[]` | `["*-lock.json", "*.svg", "dist/**"]` | Glob patterns to exclude from the diff context |
-| `predicteCommit.useLocal` | `boolean` | `false` | Use local Ollama instance instead of cloud API |
-| `predicteCommit.localBaseUrl` | `string` | `http://localhost:11434/v1` | Base URL for local AI provider (POST to `/chat/completions`) |
-| `predicteCommit.localModel` | `string` | `mistral` | Model name for local usage |
+| Setting ID                     | Type       | Default                                        | Description                                                  |
+| ------------------------------ | ---------- | ---------------------------------------------- | ------------------------------------------------------------ |
+| `predicteCommit.modelPriority` | `string[]` | `["devstral-latest", "devstral-small-latest"]` | Order of models to attempt                                   |
+| `predicteCommit.ignoredFiles`  | `string[]` | `["*-lock.json", "*.svg", "dist/**"]`          | Glob patterns to exclude from the diff context               |
+| `predicteCommit.useLocal`      | `boolean`  | `false`                                        | Use local Ollama instance instead of cloud API               |
+| `predicteCommit.localBaseUrl`  | `string`   | `http://localhost:11434/v1`                    | Base URL for local AI provider (POST to `/chat/completions`) |
+| `predicteCommit.localModel`    | `string`   | `mistral`                                      | Model name for local usage                                   |
 
 > **Security Note:** API Key is stored in `vscode.SecretStorage`, NOT in `settings.json`.
 
 ### Commands
 
-| Command ID | Description |
-|-----------|-------------|
-| `predicteCommit.generateMessage` | Generate commit message from staged changes |
-| `predicteCommit.setApiKey` | Prompt for Mistral API key and store in `vscode.SecretStorage` |
+| Command ID                       | Description                                                    |
+| -------------------------------- | -------------------------------------------------------------- |
+| `predicteCommit.generateMessage` | Generate commit message from staged changes                    |
+| `predicteCommit.setApiKey`       | Prompt for Mistral API key and store in `vscode.SecretStorage` |
 
 ---
 
@@ -204,37 +212,42 @@ import * as vscode from 'vscode';
 import { GitExtension, Repository } from './git'; // Typings
 
 export async function getTargetRepository(
-    git: GitExtension, 
-    contextArg?: any
+  git: GitExtension,
+  contextArg?: any,
 ): Promise<Repository | undefined> {
-    // 1. Context Click (SCM View)
-    if (contextArg && contextArg.rootUri) {
-        return git.getAPI(1).repositories.find(r => r.rootUri.toString() === contextArg.rootUri.toString());
-    }
+  // 1. Context Click (SCM View)
+  if (contextArg && contextArg.rootUri) {
+    return git
+      .getAPI(1)
+      .repositories.find((r) => r.rootUri.toString() === contextArg.rootUri.toString());
+  }
 
-    // 2. Active Editor
-    if (vscode.window.activeTextEditor) {
-        const uri = vscode.window.activeTextEditor.document.uri;
-        const repo = git.getAPI(1).getRepository(uri);
-        if (repo) return repo;
-    }
+  // 2. Active Editor
+  if (vscode.window.activeTextEditor) {
+    const uri = vscode.window.activeTextEditor.document.uri;
+    const repo = git.getAPI(1).getRepository(uri);
+    if (repo) return repo;
+  }
 
-    // 3. Single Repo Default
-    if (git.getAPI(1).repositories.length === 1) {
-        return git.getAPI(1).repositories[0];
-    }
+  // 3. Single Repo Default
+  if (git.getAPI(1).repositories.length === 1) {
+    return git.getAPI(1).repositories[0];
+  }
 
-    // 4. Quick Pick (Ambiguous State)
-    const repos = git.getAPI(1).repositories;
-    if (repos.length > 0) {
-        const picked = await vscode.window.showQuickPick(repos.map(r => ({
-            label: r.rootUri.fsPath.split('/').pop() || 'Repo',
-            repo: r
-        })), { placeHolder: 'Select a repository' });
-        return picked?.repo;
-    }
+  // 4. Quick Pick (Ambiguous State)
+  const repos = git.getAPI(1).repositories;
+  if (repos.length > 0) {
+    const picked = await vscode.window.showQuickPick(
+      repos.map((r) => ({
+        label: r.rootUri.fsPath.split('/').pop() || 'Repo',
+        repo: r,
+      })),
+      { placeHolder: 'Select a repository' },
+    );
+    return picked?.repo;
+  }
 
-    return undefined;
+  return undefined;
 }
 ```
 
@@ -254,6 +267,7 @@ This ensures multi-root setups write to the correct SCM input box.
 > **Task:** Write a concise git commit message for the provided code diff.
 >
 > **Rules:**
+>
 > 1. Use the Conventional Commits format (e.g., 'feat: add user login', 'fix: resolve timeout').
 > 2. The subject line must be under 50 characters.
 > 3. If the diff is complex, add a bulleted body description.
@@ -282,11 +296,11 @@ When over budget, prefer:
 
 ## 6. Validation Plan
 
-| Check | Description |
-|-------|-------------|
-| Multi-Repo Check | Open 2 repos. Edit file in Repo B. Click button in Repo A. Ensure message appears in Repo A's box. |
-| Monster Check | Stage package-lock.json. Verify "Generating..." finishes quickly (proving file was skipped). |
-| Fallback Check | Enter an invalid model name as the first item in modelPriority. Ensure extension succeeds using the second model. |
-| Auth Failure Check | Use missing/invalid key. Verify user gets a key-related error and the model chain is not attempted. |
-| Truncation Marker Check | Stage a very large diff. Verify truncation occurs with `...TRUNCATED...` markers and the request still succeeds. |
-| Ignore Matching Check | Use `dist/**` and `*-lock.json` patterns; confirm matching is against repo-relative POSIX paths. |
+| Check                   | Description                                                                                                       |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Multi-Repo Check        | Open 2 repos. Edit file in Repo B. Click button in Repo A. Ensure message appears in Repo A's box.                |
+| Monster Check           | Stage package-lock.json. Verify "Generating..." finishes quickly (proving file was skipped).                      |
+| Fallback Check          | Enter an invalid model name as the first item in modelPriority. Ensure extension succeeds using the second model. |
+| Auth Failure Check      | Use missing/invalid key. Verify user gets a key-related error and the model chain is not attempted.               |
+| Truncation Marker Check | Stage a very large diff. Verify truncation occurs with `...TRUNCATED...` markers and the request still succeeds.  |
+| Ignore Matching Check   | Use `dist/**` and `*-lock.json` patterns; confirm matching is against repo-relative POSIX paths.                  |

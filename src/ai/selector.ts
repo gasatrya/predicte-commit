@@ -10,7 +10,7 @@ import '../providers/local';
 
 export async function selectProvider(
   context: vscode.ExtensionContext,
-  cfg: PredicteCommitConfig
+  cfg: PredicteCommitConfig,
 ): Promise<ProviderClient> {
   const providerId = getEffectiveProviderId(cfg);
   const def = getProviderDefinition(providerId);

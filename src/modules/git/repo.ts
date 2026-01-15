@@ -3,7 +3,7 @@ import type { GitAPI, Repository } from './vscode';
 
 export async function getTargetRepository(
   git: GitAPI,
-  contextArg?: unknown
+  contextArg?: unknown,
 ): Promise<Repository | undefined> {
   // 1) Context click from SCM multi-repo root
   const arg = contextArg as { rootUri?: vscode.Uri } | undefined;
@@ -32,7 +32,7 @@ export async function getTargetRepository(
         label: vscode.workspace.asRelativePath(r.rootUri.fsPath, false) || r.rootUri.fsPath,
         repo: r,
       })),
-      { placeHolder: 'Select a repository' }
+      { placeHolder: 'Select a repository' },
     );
     return picked?.repo;
   }

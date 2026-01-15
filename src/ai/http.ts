@@ -14,7 +14,7 @@ function withTimeout(ms: number): AbortController {
 export async function postChatCompletion(
   url: string,
   apiKey: string | undefined,
-  body: ChatCompletionRequest
+  body: ChatCompletionRequest,
 ): Promise<string> {
   const controller = withTimeout(30_000);
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
@@ -51,7 +51,7 @@ export async function postChatCompletion(
     const text = await res.text().catch(() => '');
     throw new ProviderError(
       `API Error: ${res.status} ${res.statusText}${text ? ` - ${text.slice(0, 500)}` : ''}`,
-      res.status
+      res.status,
     );
   }
 

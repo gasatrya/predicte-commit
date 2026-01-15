@@ -9,7 +9,10 @@ const DEFAULT_MODELS = ['devstral-latest', 'devstral-small-latest'];
 export class MistralProvider implements ProviderClient {
   readonly id = 'mistral';
 
-  constructor(private readonly apiKey: string, private readonly models: string[]) {}
+  constructor(
+    private readonly apiKey: string,
+    private readonly models: string[],
+  ) {}
 
   async generate(req: GenerateRequest): Promise<GenerateResult> {
     const url = 'https://api.mistral.ai/v1/chat/completions';

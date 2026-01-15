@@ -7,7 +7,7 @@ export class LocalProvider implements ProviderClient {
   constructor(
     readonly id: string,
     private readonly baseUrl: string,
-    private readonly model: string
+    private readonly model: string,
   ) {}
 
   async generate(req: GenerateRequest): Promise<GenerateResult> {
@@ -29,7 +29,8 @@ const createLocalProvider = (id: string, defaultUrl: string) => {
     // If the user hasn't changed the URL (it's empty),
     // then use that provider's default.
     // Otherwise (user changed it), use what's in config.
-    if (baseUrl === DEFAULT_LOCAL_URL) { // DEFAULT_LOCAL_URL is ''
+    if (baseUrl === DEFAULT_LOCAL_URL) {
+      // DEFAULT_LOCAL_URL is ''
       baseUrl = defaultUrl;
     }
 

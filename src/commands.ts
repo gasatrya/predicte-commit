@@ -26,7 +26,7 @@ export async function setApiKeyCommand(context: vscode.ExtensionContext): Promis
   } else {
     const result = await vscode.window.showQuickPick(
       providersWithKeys.map((p) => ({ label: p.label, provider: p })),
-      { placeHolder: 'Select provider to set API key for' }
+      { placeHolder: 'Select provider to set API key for' },
     );
     if (!result) {
       return;
@@ -58,7 +58,7 @@ function showMissingKeyNotification(context: vscode.ExtensionContext, providerLa
     .showErrorMessage(
       `${providerLabel} API key is not set.`,
       `Set ${providerLabel} Key`,
-      'Open Settings'
+      'Open Settings',
     )
     .then(async (choice) => {
       if (choice === `Set ${providerLabel} Key`) {
@@ -71,7 +71,7 @@ function showMissingKeyNotification(context: vscode.ExtensionContext, providerLa
 }
 
 export async function maybePromptForApiKeyOnStartup(
-  context: vscode.ExtensionContext
+  context: vscode.ExtensionContext,
 ): Promise<void> {
   const hasPrompted = context.globalState.get<boolean>('predicteCommit.didPromptForKey', false);
   if (hasPrompted) {
@@ -150,7 +150,7 @@ function normalizeCommitMessage(raw: string): string {
 
 export async function generateMessageCommand(
   context: vscode.ExtensionContext,
-  contextArg?: unknown
+  contextArg?: unknown,
 ): Promise<void> {
   const cfg = getConfig();
   const gitExt = getGitExtension();
@@ -248,6 +248,6 @@ export async function generateMessageCommand(
         }
         vscode.window.showErrorMessage(err.message);
       }
-    }
+    },
   );
 }
