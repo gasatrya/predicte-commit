@@ -1,8 +1,8 @@
 import * as assert from 'assert';
-import { selectProvider } from '../ai/selector';
-import { registerProvider } from '../ai/registry';
-import { PredicteCommitConfig } from '../core/config';
-import { ProviderClient, GenerateRequest, GenerateResult } from '../ai/types';
+import { selectProvider } from '../../ai/selector';
+import { registerProvider } from '../../ai/registry';
+import { PredicteCommitConfig } from '../../core/types';
+import { ProviderClient, GenerateRequest, GenerateResult } from '../../ai/types';
 
 suite('AI Selector Test Suite', () => {
     test('selectProvider selects correct provider', async () => {

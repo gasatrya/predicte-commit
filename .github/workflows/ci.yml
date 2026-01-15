@@ -33,6 +33,9 @@ jobs:
     - name: Compile
       run: npm run compile
 
-    - name: Run Tests
+    - name: Run Unit Tests
+      run: npm run test:unit
+
+    - name: Run Integration Tests
       # VS Code tests require a display server on Linux
-      run: xvfb-run -a npm test
+      run: xvfb-run -a npm run test:integration

@@ -1,5 +1,8 @@
 import * as assert from 'assert';
-import { getEffectiveProviderId, getConfig, PredicteCommitConfig, DEFAULT_LOCAL_URL } from '../core/config';
+import { getConfig } from '../../core/config';
+import { PredicteCommitConfig } from '../../core/types';
+import { getEffectiveProviderId } from '../../core/logic';
+import { DEFAULT_LOCAL_URL } from '../../core/constants';
 
 suite('Config Test Suite', () => {
     test('getEffectiveProviderId', () => {

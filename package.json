@@ -113,12 +113,15 @@
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "check-types": "node ./node_modules/typescript/bin/tsc --noEmit",
     "lint": "node ./node_modules/eslint/bin/eslint.js src",
-    "test": "node ./node_modules/@vscode/test-cli/out/bin.mjs",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "npm run compile-tests && npx mocha out/test/unit/**/*.test.js --ui tdd",
+    "test:integration": "node ./node_modules/@vscode/test-cli/out/bin.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.ts": [
-      "eslint --fix"
+      "eslint --fix",
+      "bash -c 'npm run test:unit'"
     ]
   },
   "devDependencies": {

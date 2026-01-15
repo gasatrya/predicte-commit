@@ -1,16 +1,6 @@
 import * as vscode from 'vscode';
-
-export type PredicteCommitConfig = {
-  provider: string;
-  models: string[];
-  ignoredFiles: string[];
-  useLocal: boolean;
-  localBaseUrl: string;
-  localModel: string;
-  debugLogging: boolean;
-};
-
-export const DEFAULT_LOCAL_URL = '';
+import { PredicteCommitConfig } from './types';
+import { DEFAULT_LOCAL_URL } from './constants';
 
 export function getConfig(): PredicteCommitConfig {
   const cfg = vscode.workspace.getConfiguration('predicteCommit');
@@ -25,19 +15,4 @@ export function getConfig(): PredicteCommitConfig {
     localModel: cfg.get<string>('localModel', ''),
     debugLogging: cfg.get<boolean>('debugLogging', false),
   };
-}
-
-export const DIFF_CAPS: { maxCharsPerFile: number; maxCharsTotal: number } = {
-  maxCharsPerFile: 8000,
-  maxCharsTotal: 32000,
-};
-
-export const TRUNCATION_MARKER = '...TRUNCATED...';
-
-export function getEffectiveProviderId(cfg: PredicteCommitConfig): string {
-  // Backwards compatibility: existing users may rely on useLocal.
-  if (cfg.useLocal) {
-    return 'ollama';
-  }
-  return cfg.provider;
 }

@@ -1,6 +1,6 @@
 import * as assert from 'assert';
-import { postChatCompletion } from '../ai/http';
-import { ProviderError } from '../ai/errors';
+import { postChatCompletion } from '../../ai/http';
+import { ProviderError } from '../../ai/errors';
 
 suite('HTTP Error Handling', () => {
     test('ECONNREFUSED returns friendly message', async () => {
