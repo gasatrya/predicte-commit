@@ -1,9 +1,9 @@
 import * as assert from 'assert';
-import { getEffectiveProviderId, getConfig, PredicteCommitConfig } from '../core/config';
+import { getEffectiveProviderId, getConfig, PredicteCommitConfig, DEFAULT_LOCAL_URL } from '../core/config';
 
 suite('Config Test Suite', () => {
     test('getEffectiveProviderId', () => {
-        // Test 1: useLocal is true -> should return 'local' (backward compatibility)
+        // Test 1: useLocal is true -> should return 'ollama' (renamed from local)
         const cfgLocal: PredicteCommitConfig = {
             provider: 'mistral',
             useLocal: true,
@@ -13,7 +13,7 @@ suite('Config Test Suite', () => {
             localModel: '',
             debugLogging: false
         };
-        assert.strictEqual(getEffectiveProviderId(cfgLocal), 'local');
+        assert.strictEqual(getEffectiveProviderId(cfgLocal), 'ollama');
 
         // Test 2: useLocal is false -> should return provider
         const cfgMistral: PredicteCommitConfig = {
@@ -23,13 +23,13 @@ suite('Config Test Suite', () => {
         };
         assert.strictEqual(getEffectiveProviderId(cfgMistral), 'mistral');
 
-        // Test 3: provider is local (explicit)
+        // Test 3: provider is ollama (explicit)
         const cfgLocalExplicit: PredicteCommitConfig = {
             ...cfgLocal,
             useLocal: false,
-            provider: 'local'
+            provider: 'ollama'
         };
-        assert.strictEqual(getEffectiveProviderId(cfgLocalExplicit), 'local');
+        assert.strictEqual(getEffectiveProviderId(cfgLocalExplicit), 'ollama');
     });
 
     test('getConfig defaults', () => {
@@ -41,5 +41,7 @@ suite('Config Test Suite', () => {
         assert.strictEqual(cfg.provider, 'mistral');
         assert.strictEqual(cfg.useLocal, false);
         assert.deepStrictEqual(cfg.ignoredFiles, ['*-lock.json', '*.svg', 'dist/**']);
+        assert.strictEqual(cfg.localBaseUrl, DEFAULT_LOCAL_URL);
+        assert.strictEqual(cfg.localModel, '');
     });
 });

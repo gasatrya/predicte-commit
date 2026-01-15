@@ -10,6 +10,8 @@ export type PredicteCommitConfig = {
   debugLogging: boolean;
 };
 
+export const DEFAULT_LOCAL_URL = '';
+
 export function getConfig(): PredicteCommitConfig {
   const cfg = vscode.workspace.getConfiguration('predicteCommit');
   const provider = cfg.get<string>('provider', 'mistral');
@@ -19,8 +21,8 @@ export function getConfig(): PredicteCommitConfig {
     models: cfg.get<string[]>('models', []),
     ignoredFiles: cfg.get<string[]>('ignoredFiles', ['*-lock.json', '*.svg', 'dist/**']),
     useLocal,
-    localBaseUrl: cfg.get<string>('localBaseUrl', 'http://localhost:11434/v1'),
-    localModel: cfg.get<string>('localModel', 'mistral'),
+    localBaseUrl: cfg.get<string>('localBaseUrl', DEFAULT_LOCAL_URL),
+    localModel: cfg.get<string>('localModel', ''),
     debugLogging: cfg.get<boolean>('debugLogging', false),
   };
 }
@@ -35,7 +37,7 @@ export const TRUNCATION_MARKER = '...TRUNCATED...';
 export function getEffectiveProviderId(cfg: PredicteCommitConfig): string {
   // Backwards compatibility: existing users may rely on useLocal.
   if (cfg.useLocal) {
-    return 'local';
+    return 'ollama';
   }
   return cfg.provider;
 }
