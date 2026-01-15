@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 
 export type PredicteCommitConfig = {
   provider: string;
-  modelPriority: string[];
+  models: string[];
   ignoredFiles: string[];
   useLocal: boolean;
   localBaseUrl: string;
@@ -16,7 +16,7 @@ export function getConfig(): PredicteCommitConfig {
   const useLocal = cfg.get<boolean>('useLocal', false);
   return {
     provider,
-    modelPriority: cfg.get<string[]>('modelPriority', ['devstral-latest', 'devstral-small-latest']),
+    models: cfg.get<string[]>('models', []),
     ignoredFiles: cfg.get<string[]>('ignoredFiles', ['*-lock.json', '*.svg', 'dist/**']),
     useLocal,
     localBaseUrl: cfg.get<string>('localBaseUrl', 'http://localhost:11434/v1'),

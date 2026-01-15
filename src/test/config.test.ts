@@ -7,7 +7,7 @@ suite('Config Test Suite', () => {
         const cfgLocal: PredicteCommitConfig = {
             provider: 'mistral',
             useLocal: true,
-            modelPriority: [],
+            models: [],
             ignoredFiles: [],
             localBaseUrl: '',
             localModel: '',

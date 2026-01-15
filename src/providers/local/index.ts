@@ -24,6 +24,7 @@ registerProvider({
   id: 'local',
   label: 'Local (Ollama)',
   create: async (_context, config) => {
-    return new LocalProvider(config.localBaseUrl, config.localModel);
+    const model = config.models.length > 0 ? config.models[0] : config.localModel;
+    return new LocalProvider(config.localBaseUrl, model);
   },
 });
