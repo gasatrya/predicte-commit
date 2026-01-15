@@ -4,17 +4,18 @@ import type { GenerateRequest, GenerateResult, ProviderClient } from '../../ai/t
 import { registerProvider } from '../../ai/registry';
 
 export const MISTRAL_API_KEY = 'predicteCommit.mistralApiKey';
+const DEFAULT_MODELS = ['devstral-latest', 'devstral-small-latest'];
 
 export class MistralProvider implements ProviderClient {
   readonly id = 'mistral';
 
-  constructor(private readonly apiKey: string, private readonly modelPriority: string[]) {}
+  constructor(private readonly apiKey: string, private readonly models: string[]) {}
 
   async generate(req: GenerateRequest): Promise<GenerateResult> {
     const url = 'https://api.mistral.ai/v1/chat/completions';
     let lastErr: ProviderError | undefined;
 
-    for (const model of this.modelPriority) {
+    for (const model of this.models) {
       try {
         const text = await postChatCompletion(url, this.apiKey, {
           model,
@@ -54,6 +55,7 @@ registerProvider({
   configKey: MISTRAL_API_KEY,
   create: async (context, config) => {
     const key = (await context.secrets.get(MISTRAL_API_KEY)) ?? '';
-    return new MistralProvider(key, config.modelPriority);
+    const models = config.models.length > 0 ? config.models : DEFAULT_MODELS;
+    return new MistralProvider(key, models);
   },
 });

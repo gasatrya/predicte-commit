@@ -46,25 +46,18 @@
     "configuration": {
       "title": "Predicte Commit",
       "properties": {
-        "predicteCommit.modelPriority": {
+        "predicteCommit.models": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "default": [
-            "devstral-latest",
-            "devstral-small-latest"
-          ],
-          "description": "Order of Mistral models to attempt"
+          "default": [],
+          "description": "List of models to use for the active provider. If empty, the provider's defaults are used."
         },
         "predicteCommit.provider": {
           "type": "string",
           "default": "mistral",
-          "enum": [
-            "mistral",
-            "local"
-          ],
-          "description": "AI provider to use. 'local' uses an Ollama-compatible endpoint."
+          "description": "AI provider to use (e.g. 'mistral', 'local'). Matches the registered provider ID."
         },
         "predicteCommit.ignoredFiles": {
           "type": "array",

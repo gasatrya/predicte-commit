@@ -23,7 +23,7 @@ suite('AI Selector Test Suite', () => {
         const configMock: PredicteCommitConfig = {
             provider: 'test-provider',
             useLocal: false,
-            modelPriority: [],
+            models: [],
             ignoredFiles: [],
             localBaseUrl: '',
             localModel: '',
@@ -41,7 +41,7 @@ suite('AI Selector Test Suite', () => {
         const configMock: PredicteCommitConfig = {
             provider: 'unknown-provider',
             useLocal: false,
-            modelPriority: [],
+            models: [],
             ignoredFiles: [],
             localBaseUrl: '',
             localModel: '',
@@ -57,7 +57,7 @@ suite('AI Selector Test Suite', () => {
         const configMock: PredicteCommitConfig = {
             provider: 'mistral',
             useLocal: false,
-            modelPriority: [],
+            models: [],
             ignoredFiles: [],
             localBaseUrl: '',
             localModel: '',
