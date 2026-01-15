@@ -2,17 +2,34 @@
   "name": "predicte-commit",
   "displayName": "Predicte Commit",
   "description": "AI commit message generator",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "publisher": "predicte",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gasatrya/predicte-commit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gasatrya/predicte-commit/issues"
+  },
+  "homepage": "https://github.com/gasatrya/predicte-commit#readme",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.108.0"
   },
   "categories": [
+    "Machine Learning",
     "Other"
   ],
+  "keywords": [
+    "git",
+    "commit",
+    "message",
+    "mistral",
+    "ollama"
+  ],
   "activationEvents": [
-    "onStartupFinished",
-    "onCommand:predicteCommit.generateMessage",
-    "onCommand:predicteCommit.setApiKey"
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {
