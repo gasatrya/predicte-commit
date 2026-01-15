@@ -1,7 +1,7 @@
 import * as assert from 'assert';
-import { isIgnored } from '../utils/ignore';
-import { truncateWithMarker, capDiffsByFileAndTotal } from '../utils/truncate';
-import { DIFF_CAPS, TRUNCATION_MARKER } from '../core/config';
+import { isIgnored } from '../../utils/ignore';
+import { truncateWithMarker, capDiffsByFileAndTotal } from '../../utils/truncate';
+import { DIFF_CAPS, TRUNCATION_MARKER } from '../../core/constants';
 
 suite('Utils Test Suite', () => {
     test('isIgnored', () => {

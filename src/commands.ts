@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
-import { getConfig, getEffectiveProviderId } from './core/config';
+import { getConfig } from './core/config';
+import { getEffectiveProviderId } from './core/logic';
 import { getGitExtension } from './modules/git/vscode';
 import { getTargetRepository } from './modules/git/repo';
 import { toRepoRelativePosixPath } from './utils/paths';

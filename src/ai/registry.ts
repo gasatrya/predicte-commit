@@ -1,5 +1,5 @@
-import * as vscode from 'vscode';
-import type { PredicteCommitConfig } from '../core/config';
+import type * as vscode from 'vscode';
+import type { PredicteCommitConfig } from '../core/types';
 import type { ProviderClient } from './types';
 
 export interface ProviderDefinition {

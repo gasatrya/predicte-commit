@@ -1,6 +1,6 @@
 import type * as vscode from 'vscode';
-import type { PredicteCommitConfig } from '../core/config';
-import { getEffectiveProviderId } from '../core/config';
+import type { PredicteCommitConfig } from '../core/types';
+import { getEffectiveProviderId } from '../core/logic';
 import type { ProviderClient } from './types';
 import { getProviderDefinition } from './registry';
 

@@ -1,4 +1,4 @@
-import { DIFF_CAPS, TRUNCATION_MARKER } from '../core/config';
+import { DIFF_CAPS, TRUNCATION_MARKER } from '../core/constants';
 
 export function truncateWithMarker(input: string, maxChars: number): string {
   if (input.length <= maxChars) {

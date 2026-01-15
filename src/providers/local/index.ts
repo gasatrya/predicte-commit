@@ -1,7 +1,7 @@
 import { postChatCompletion } from '../../ai/http';
 import type { GenerateRequest, GenerateResult, ProviderClient } from '../../ai/types';
 import { registerProvider } from '../../ai/registry';
-import { DEFAULT_LOCAL_URL } from '../../core/config';
+import { DEFAULT_LOCAL_URL } from '../../core/constants';
 
 export class LocalProvider implements ProviderClient {
   constructor(
