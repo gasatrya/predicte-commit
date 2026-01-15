@@ -36,10 +36,10 @@ export async function postChatCompletion(
         throw new ProviderError(`Request timed out after 30s connecting to ${url}`);
       }
       const cause = (e as any).cause;
-      if (cause?.code === 'ECONNREFUSED') {
+      if (cause?.code === 'ECONNREFUSED' || cause?.message?.includes('ECONNREFUSED')) {
         throw new ProviderError(`Connection refused to ${url}. Is the server running?`);
       }
-      if (cause?.code === 'ENOTFOUND') {
+      if (cause?.code === 'ENOTFOUND' || cause?.message?.includes('ENOTFOUND')) {
         throw new ProviderError(`Address not found: ${url}. Check your settings.`);
       }
       throw new ProviderError(`Network error: ${e.message}`);
