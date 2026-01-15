@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { getEffectiveProviderId, getConfig, PredicteCommitConfig } from '../core/config';
+import { getEffectiveProviderId, getConfig, PredicteCommitConfig, DEFAULT_LOCAL_URL } from '../core/config';
 
 suite('Config Test Suite', () => {
     test('getEffectiveProviderId', () => {
@@ -41,5 +41,7 @@ suite('Config Test Suite', () => {
         assert.strictEqual(cfg.provider, 'mistral');
         assert.strictEqual(cfg.useLocal, false);
         assert.deepStrictEqual(cfg.ignoredFiles, ['*-lock.json', '*.svg', 'dist/**']);
+        assert.strictEqual(cfg.localBaseUrl, DEFAULT_LOCAL_URL);
+        assert.strictEqual(cfg.localModel, '');
     });
 });
