@@ -31,7 +31,20 @@ export async function postChatCompletion(
       signal: controller.signal,
     });
   } catch (e) {
-    throw new ProviderError(e instanceof Error ? e.message : 'Network error');
+    if (e instanceof Error) {
+      if (e.name === 'AbortError') {
+        throw new ProviderError(`Request timed out after 30s connecting to ${url}`);
+      }
+      const cause = (e as any).cause;
+      if (cause?.code === 'ECONNREFUSED') {
+        throw new ProviderError(`Connection refused to ${url}. Is the server running?`);
+      }
+      if (cause?.code === 'ENOTFOUND') {
+        throw new ProviderError(`Address not found: ${url}. Check your settings.`);
+      }
+      throw new ProviderError(`Network error: ${e.message}`);
+    }
+    throw new ProviderError('Network error');
   }
 
   if (!res.ok) {
