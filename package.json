@@ -49,7 +49,7 @@
         "predicteCommit.provider": {
           "type": "string",
           "default": "mistral",
-          "description": "AI provider to use (e.g. 'mistral', 'local', 'vllm', 'lmstudio'). Matches the registered provider ID.",
+          "description": "AI provider to use (e.g. 'mistral', 'ollama', 'vllm', 'lmstudio'). Matches the registered provider ID.",
           "order": 1
         },
         "predicteCommit.models": {
@@ -77,13 +77,13 @@
         "predicteCommit.useLocal": {
           "type": "boolean",
           "default": false,
-          "description": "Use local Ollama-compatible endpoint instead of Mistral cloud",
+          "description": "Use a local provider (Ollama, vLLM, LM Studio) instead of Mistral cloud",
           "order": 10
         },
         "predicteCommit.localBaseUrl": {
           "type": "string",
-          "default": "http://localhost:11434/v1",
-          "description": "Base URL for local provider (POST to /chat/completions)",
+          "default": "",
+          "description": "Base URL for local provider. Leave empty to use the provider's default (Ollama: :11434, vLLM: :8000, LM Studio: :1234).",
           "order": 11
         },
         "predicteCommit.localModel": {

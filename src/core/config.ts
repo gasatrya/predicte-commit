@@ -10,7 +10,7 @@ export type PredicteCommitConfig = {
   debugLogging: boolean;
 };
 
-export const DEFAULT_LOCAL_URL = 'http://localhost:11434/v1';
+export const DEFAULT_LOCAL_URL = '';
 
 export function getConfig(): PredicteCommitConfig {
   const cfg = vscode.workspace.getConfiguration('predicteCommit');
@@ -37,7 +37,7 @@ export const TRUNCATION_MARKER = '...TRUNCATED...';
 export function getEffectiveProviderId(cfg: PredicteCommitConfig): string {
   // Backwards compatibility: existing users may rely on useLocal.
   if (cfg.useLocal) {
-    return 'local';
+    return 'ollama';
   }
   return cfg.provider;
 }

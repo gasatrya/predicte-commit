@@ -26,11 +26,10 @@ export class LocalProvider implements ProviderClient {
 const createLocalProvider = (id: string, defaultUrl: string) => {
   return async (_context: any, config: any) => {
     let baseUrl = config.localBaseUrl;
-    // If the user hasn't changed the URL (it's still the Ollama default),
-    // and we are creating a provider that has a different default (vllm/lmstudio),
+    // If the user hasn't changed the URL (it's empty),
     // then use that provider's default.
-    // Otherwise (user changed it, or it matches), use what's in config.
-    if (baseUrl === DEFAULT_LOCAL_URL && defaultUrl !== DEFAULT_LOCAL_URL) {
+    // Otherwise (user changed it), use what's in config.
+    if (baseUrl === DEFAULT_LOCAL_URL) { // DEFAULT_LOCAL_URL is ''
       baseUrl = defaultUrl;
     }
 
@@ -40,9 +39,9 @@ const createLocalProvider = (id: string, defaultUrl: string) => {
 };
 
 registerProvider({
-  id: 'local',
-  label: 'Local (Ollama)',
-  create: createLocalProvider('local', DEFAULT_LOCAL_URL),
+  id: 'ollama',
+  label: 'Ollama',
+  create: createLocalProvider('ollama', 'http://localhost:11434/v1'),
 });
 
 registerProvider({
