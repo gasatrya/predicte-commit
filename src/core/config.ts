@@ -11,6 +11,7 @@ export function getConfig(): PredicteCommitConfig {
     models: cfg.get<string[]>('models', []),
     ignoredFiles: cfg.get<string[]>('ignoredFiles', ['*-lock.json', '*.svg', 'dist/**']),
     useLocal,
+    localProvider: cfg.get<string>('localProvider', 'ollama'),
     localBaseUrl: cfg.get<string>('localBaseUrl', DEFAULT_LOCAL_URL),
     localModel: cfg.get<string>('localModel', ''),
     debugLogging: cfg.get<boolean>('debugLogging', false),

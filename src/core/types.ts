@@ -3,6 +3,7 @@ export type PredicteCommitConfig = {
   models: string[];
   ignoredFiles: string[];
   useLocal: boolean;
+  localProvider: string;
   localBaseUrl: string;
   localModel: string;
   debugLogging: boolean;

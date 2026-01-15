@@ -10,6 +10,7 @@ suite('Config Test Suite', () => {
     const cfgLocal: PredicteCommitConfig = {
       provider: 'mistral',
       useLocal: true,
+      localProvider: 'ollama',
       models: [],
       ignoredFiles: [],
       localBaseUrl: '',
@@ -17,6 +18,12 @@ suite('Config Test Suite', () => {
       debugLogging: false,
     };
     assert.strictEqual(getEffectiveProviderId(cfgLocal), 'ollama');
+
+    const cfgLocalVllm: PredicteCommitConfig = {
+      ...cfgLocal,
+      localProvider: 'vllm',
+    };
+    assert.strictEqual(getEffectiveProviderId(cfgLocalVllm), 'vllm');
 
     // Test 2: useLocal is false -> should return provider
     const cfgMistral: PredicteCommitConfig = {
@@ -43,6 +50,7 @@ suite('Config Test Suite', () => {
     // config.ts: cfg.get<string>('provider', 'mistral')
     assert.strictEqual(cfg.provider, 'mistral');
     assert.strictEqual(cfg.useLocal, false);
+    assert.strictEqual(cfg.localProvider, 'ollama');
     assert.deepStrictEqual(cfg.ignoredFiles, ['*-lock.json', '*.svg', 'dist/**']);
     assert.strictEqual(cfg.localBaseUrl, DEFAULT_LOCAL_URL);
     assert.strictEqual(cfg.localModel, '');
