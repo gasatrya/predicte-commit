@@ -50,10 +50,11 @@ _This extension is for developers who want to automate the tedious task of writi
 
 | Setting                       | Default                               | Description                                                      |
 | :---------------------------- | :------------------------------------ | :--------------------------------------------------------------- |
-| `predicteCommit.provider`     | `mistral`                             | AI provider to use (`mistral` or `local`).                       |
+| `predicteCommit.provider`     | `mistral`                             | Choose provider (default: mistral).                              |
 | `predicteCommit.models`       | `[]`                                  | List of models to use. If empty, uses provider defaults.         |
 | `predicteCommit.ignoredFiles` | `["*-lock.json", "*.svg", "dist/**"]` | Glob patterns to exclude from analysis.                          |
 | `predicteCommit.useLocal`     | `false`                               | Enable to use a local provider instead of Mistral.               |
+| `predicteCommit.localProvider`| `ollama`                              | Local provider to use when Use Local is enabled.                 |
 | `predicteCommit.localBaseUrl` | _(empty)_                             | Base URL for local provider (e.g., `http://localhost:11434/v1`). |
 | `predicteCommit.localModel`   | _(empty)_                             | Model name for local provider.                                   |
 | `predicteCommit.debugLogging` | `false`                               | Log prompt payload and diagnostics to the output channel.        |
