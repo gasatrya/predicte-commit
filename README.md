@@ -20,34 +20,34 @@
 
 _This extension is for developers who want to automate the tedious task of writing commit messages without leaving their source control view._
 
-## ✨ Features
+## Features
 
-- **💸 100% Free**: Use Mistral's latest coding models (Devstral 2).
-- **🚀 Zero-Friction**: Generate messages with a single click or command.
-- **🔒 Privacy-Aware**: Built-in content filtering and explicit file ignores to keep secrets safe.
-- **🤖 Flexible Providers**: Use **Mistral AI** (cloud) or your own **Local** instance (Ollama, vLLM, LM Studio).
-- **🧠 Smart Truncation**: Automatically handles large diffs to stay within context windows.
-- **⚡ Efficient**: Streamlined to provide quick results directly in your commit input box.
+- **100% Free**: Use Mistral's latest coding models (Devstral 2).
+- **Zero-Friction**: Generate messages with a single click or command.
+- **Privacy-Aware**: Built-in content filtering and explicit file ignores to keep secrets safe.
+- **Flexible Providers**: Use **Mistral AI** (cloud) or your own **Local** instance (Ollama, vLLM, LM Studio).
+- **Smart Truncation**: Automatically handles large diffs to stay within context windows.
+- **Efficient**: Streamlined to provide quick results directly in your commit input box.
 
-## 📦 Installation
+## Installation
 
 1. Open the **Extensions** sidebar in VS Code (`Ctrl+Shift+X`).
 2. Search for `Predicte Commit`.
 3. Click **Install**.
 
-## 🚀 Getting Started
+## Getting Started
 
 1.  **Get an API Key**: Sign up at [Mistral AI](https://console.mistral.ai/) and get your API key.
 2.  **Set Key**: Open Command Palette (`Ctrl+Shift+P`) and run **Predicte Commit: Set API Key**.
 3.  **Stage Changes**: Stage your files in the Source Control view as usual.
 4.  **Generate Message**:
-    - Click the **Sparkle Icon** $(sparkle) in the Source Control title bar.
+    - Click the **Sparkle Icon** in the Source Control title bar.
     - _Or_ open the Command Palette (`Ctrl+Shift+P`) and run **Predicte Commit: Generate Message**.
 5.  **Review**: The generated message will appear in your commit input box. Edit if needed, then commit!
 
 > **Note**: If using the Mistral provider (default), you will be prompted to enter your API key on the first run.
 
-## ⚙️ Configuration
+## Configuration
 
 | Setting                        | Default                               | Description                                                      |
 | :----------------------------- | :------------------------------------ | :--------------------------------------------------------------- |
@@ -60,10 +60,10 @@ _This extension is for developers who want to automate the tedious task of writi
 | `predicteCommit.localModel`    | _(empty)_                             | Model name for local provider.                                   |
 | `predicteCommit.debugLogging`  | `false`                               | Log prompt payload and diagnostics to the output channel.        |
 
-## 🤝 Contributing
+## Contributing
 
 We love contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) to get started.
 
-## 📄 License
+## License
 
 MIT © [Ga Satrya](https://github.com/gasatrya)
