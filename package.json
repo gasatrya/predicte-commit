@@ -1,8 +1,8 @@
 {
   "name": "predicte-commit",
-  "displayName": "Predicte Commit",
-  "description": "AI commit message generator",
-  "version": "1.0.0",
+  "displayName": "Predicte AI Commit Message Generator",
+  "description": "Automatically generate git commit messages using AI for FREE following conventional commits guidelines. Powered by Mistral AI or Local LLMs (Ollama, vLLM, LMstudio)",
+  "version": "1.0.1",
   "publisher": "predicte",
   "license": "MIT",
   "repository": {
@@ -18,6 +18,8 @@
     "vscode": "^1.108.0"
   },
   "categories": [
+    "AI",
+    "Programming Languages",
     "Machine Learning",
     "Other"
   ],
@@ -26,7 +28,12 @@
     "commit",
     "message",
     "mistral",
-    "ollama"
+    "ollama",
+    "devstral",
+    "ai",
+    "conventional-commits",
+    "vllm",
+    "lmstudio"
   ],
   "activationEvents": [
     "onStartupFinished"
