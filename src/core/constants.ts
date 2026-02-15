@@ -1,4 +1,4 @@
-export const DEFAULT_LOCAL_URL = '';
+export const EMPTY_BASE_URL = '';
 
 export const DIFF_CAPS: { maxCharsPerFile: number; maxCharsTotal: number } = {
   maxCharsPerFile: 8000,

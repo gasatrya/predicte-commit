@@ -1,7 +1,7 @@
 import { postChatCompletion } from '../../ai/http';
 import type { GenerateRequest, GenerateResult, ProviderClient } from '../../ai/types';
 import { registerProvider } from '../../ai/registry';
-import { DEFAULT_LOCAL_URL } from '../../core/constants';
+import { EMPTY_BASE_URL } from '../../core/constants';
 
 export class LocalProvider implements ProviderClient {
   constructor(
@@ -29,8 +29,8 @@ const createLocalProvider = (id: string, defaultUrl: string) => {
     // If the user hasn't changed the URL (it's empty),
     // then use that provider's default.
     // Otherwise (user changed it), use what's in config.
-    if (baseUrl === DEFAULT_LOCAL_URL) {
-      // DEFAULT_LOCAL_URL is ''
+    if (baseUrl === EMPTY_BASE_URL) {
+      // EMPTY_BASE_URL is ''
       baseUrl = defaultUrl;
     }
 
