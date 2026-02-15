@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { PredicteCommitConfig } from './types';
-import { DEFAULT_LOCAL_URL } from './constants';
+import { EMPTY_BASE_URL } from './constants';
 
 export function getConfig(): PredicteCommitConfig {
   const cfg = vscode.workspace.getConfiguration('predicteCommit');
@@ -12,7 +12,7 @@ export function getConfig(): PredicteCommitConfig {
     ignoredFiles: cfg.get<string[]>('ignoredFiles', ['*-lock.json', '*.svg', 'dist/**']),
     useLocal,
     localProvider: cfg.get<string>('localProvider', 'ollama'),
-    localBaseUrl: cfg.get<string>('localBaseUrl', DEFAULT_LOCAL_URL),
+    localBaseUrl: cfg.get<string>('localBaseUrl', EMPTY_BASE_URL),
     localModel: cfg.get<string>('localModel', ''),
     debugLogging: cfg.get<boolean>('debugLogging', false),
   };
