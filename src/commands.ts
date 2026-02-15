@@ -183,19 +183,27 @@ export async function generateMessageCommand(
         `stagedFiles: ${staged.length}`,
       ]);
 
+      const results = await Promise.all(
+        staged.map(async (change) => {
+          const rel = toRepoRelativePosixPath(repoRoot, change.uri.fsPath);
+          const matched = cfg.ignoredFiles.find((p) => isIgnored(rel, [p]));
+          if (matched) {
+            return { type: 'skipped', file: rel, pattern: matched } as const;
+          }
+          const diff = await getStagedDiff(repo, change.uri);
+          return { type: 'diff', header: `# File: ${rel}`, diff } as const;
+        }),
+      );
+
       const skipped: Array<{ file: string; pattern: string }> = [];
       const diffs: Array<{ header: string; diff: string }> = [];
 
-      for (const change of staged) {
-        const rel = toRepoRelativePosixPath(repoRoot, change.uri.fsPath);
-        const matched = cfg.ignoredFiles.find((p) => isIgnored(rel, [p]));
-        if (matched) {
-          skipped.push({ file: rel, pattern: matched });
-          continue;
+      for (const res of results) {
+        if (res.type === 'skipped') {
+          skipped.push({ file: res.file, pattern: res.pattern });
+        } else {
+          diffs.push({ header: res.header, diff: res.diff });
         }
-        const header = `# File: ${rel}`;
-        const diff = await getStagedDiff(repo, change.uri);
-        diffs.push({ header, diff });
       }
 
       if (diffs.length === 0) {
