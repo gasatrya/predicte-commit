@@ -223,9 +223,9 @@ export async function generateMessageCommand(
       const userPrompt = `Diff:\n${boundedDiff}`;
       logDebug(cfg.debugLogging, [
         '--- systemPrompt ---',
-        SYSTEM_PROMPT,
+        `Prompt length: ${SYSTEM_PROMPT.length} characters`,
         '--- userPrompt (Diff) ---',
-        userPrompt,
+        `Prompt length: ${userPrompt.length} characters`,
       ]);
 
       try {
